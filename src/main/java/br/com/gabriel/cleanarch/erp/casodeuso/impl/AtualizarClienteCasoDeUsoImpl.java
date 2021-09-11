@@ -1,9 +1,8 @@
 package br.com.gabriel.cleanarch.erp.casodeuso.impl;
 
 import br.com.gabriel.cleanarch.erp.casodeuso.AtualizarClienteCasoDeUso;
-import br.com.gabriel.cleanarch.erp.casodeuso.portao.ApiCepIntegracaoPortao;
-import br.com.gabriel.cleanarch.erp.casodeuso.recurso.Cliente;
-import br.com.gabriel.cleanarch.erp.casodeuso.recurso.Logradouro;
+import br.com.gabriel.cleanarch.erp.casodeuso.dominio.Cliente;
+import br.com.gabriel.cleanarch.erp.casodeuso.portao.ClienteRepositoryPortao;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -11,16 +10,14 @@ import org.springframework.stereotype.Service;
 @AllArgsConstructor
 public class AtualizarClienteCasoDeUsoImpl implements AtualizarClienteCasoDeUso {
 
-    private final ApiCepIntegracaoPortao apiCepIntegracaoPortao;
+    private final ClienteRepositoryPortao clienteRepositoryPortao;
+    //TODO buscar cliente antes de atualizar
 
-    @Override
+
     public Cliente execute(Cliente cliente) {
 
-        Logradouro logradouro = apiCepIntegracaoPortao.buscarCep(cliente.getLogradouro().getCep());
-        cliente.setLogradouro(logradouro);
+        return clienteRepositoryPortao.update(cliente);
 
-        //TODO atualizar cliente no banco de dados
-        return null;
     }
 
 

@@ -1,16 +1,21 @@
 package br.com.gabriel.cleanarch.erp.repositorio.recurso;
 
-import br.com.gabriel.cleanarch.erp.casodeuso.recurso.Cliente;
-import br.com.gabriel.cleanarch.erp.casodeuso.recurso.Contato;
-import br.com.gabriel.cleanarch.erp.casodeuso.recurso.Logradouro;
+import br.com.gabriel.cleanarch.erp.casodeuso.dominio.Cliente;
+import br.com.gabriel.cleanarch.erp.casodeuso.dominio.Contato;
+import br.com.gabriel.cleanarch.erp.casodeuso.dominio.Logradouro;
+import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
 @Entity
 @Data
+@NoArgsConstructor
+@AllArgsConstructor
 public class ClienteDB {
 
     @Id
@@ -20,9 +25,9 @@ public class ClienteDB {
     private String nomeEmpresa;
     @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "logradouro_id", referencedColumnName = "id")
-    private LogradouroDB logradouro;
+    private LogradouroDB logradouro = new LogradouroDB();
     @OneToMany(targetEntity = ContatoDB.class, cascade = CascadeType.ALL)
-    private List<ContatoDB> contato;
+    private List<ContatoDB> contato = new ArrayList<>();
 
     public ClienteDB(Cliente cliente) {
         converte(cliente);
@@ -30,7 +35,9 @@ public class ClienteDB {
 
     private ClienteDB converte(Cliente cliente) {
         this.nomeEmpresa = cliente.getNomeEmpresa();
+        this.id = cliente.getId();
         LogradouroDB logradouroDB = new LogradouroDB();
+        logradouroDB.setId(cliente.getLogradouro().getId());
         logradouroDB.setCep(cliente.getLogradouro().getCep());
         logradouroDB.setCidade(cliente.getLogradouro().getCidade());
         logradouroDB.setEndereco(cliente.getLogradouro().getEndereco());

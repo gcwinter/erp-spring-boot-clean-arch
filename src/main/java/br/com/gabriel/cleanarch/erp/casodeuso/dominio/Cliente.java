@@ -1,5 +1,7 @@
-package br.com.gabriel.cleanarch.erp.casodeuso.recurso;
+package br.com.gabriel.cleanarch.erp.casodeuso.dominio;
 
+import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.List;
 
 
@@ -8,8 +10,10 @@ public class Cliente {
     private long id;
 
     private String nomeEmpresa;
-    private Logradouro logradouro;
-    private List<Contato> contato;
+    private Logradouro logradouro = new Logradouro();
+    private List<Contato> contato = new ArrayList<>();
+    private LocalDate dataDeNascimento;
+    private int idade;
 
     public Cliente() {
     }

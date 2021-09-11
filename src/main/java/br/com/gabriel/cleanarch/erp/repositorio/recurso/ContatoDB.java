@@ -1,6 +1,6 @@
 package br.com.gabriel.cleanarch.erp.repositorio.recurso;
 
-import br.com.gabriel.cleanarch.erp.casodeuso.recurso.Contato;
+import br.com.gabriel.cleanarch.erp.casodeuso.dominio.Contato;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -38,12 +38,12 @@ public class ContatoDB {
     }
 
     public Contato paraContato() {
-            Contato contato = new Contato();
-            contato.setEmail(this.getEmail());
-            contato.setNome(this.getNome());
-            contato.setSetor(this.getSetor());
-            contato.setTelefone(this.getTelefone());
-            return contato;
+        Contato contato = new Contato();
+        contato.setEmail(this.getEmail());
+        contato.setNome(this.getNome());
+        contato.setSetor(this.getSetor());
+        contato.setTelefone(this.getTelefone());
+        return contato;
 
     }
 }

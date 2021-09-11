@@ -30,7 +30,7 @@ public class ApiCorreiosImpl implements ApiCorreios {
             HttpResponse<String> response = client.send(request, HttpResponse.BodyHandlers.ofString());
             System.out.println(response.statusCode());
             System.out.println(response.body());
-            return objectMapper.readValue(response.body(),EnderecoCorreiosIntegracao.class);
+            return objectMapper.readValue(response.body(), EnderecoCorreiosIntegracao.class);
             //TODO retornar enderecoCorreioIntegracao dica do vini: usar objectmapper;
 
         } catch (Exception e) {

@@ -1,4 +1,4 @@
-package br.com.gabriel.cleanarch.erp.casodeuso.recurso;
+package br.com.gabriel.cleanarch.erp.casodeuso.dominio;
 
 
 public class Contato {

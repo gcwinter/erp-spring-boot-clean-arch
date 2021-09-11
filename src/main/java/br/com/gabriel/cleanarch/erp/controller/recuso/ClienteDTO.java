@@ -1,39 +1,20 @@
 package br.com.gabriel.cleanarch.erp.controller.recuso;
 
-import br.com.gabriel.cleanarch.erp.casodeuso.recurso.Cliente;
+import br.com.gabriel.cleanarch.erp.casodeuso.dominio.Cliente;
+import br.com.gabriel.cleanarch.erp.casodeuso.dominio.Logradouro;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
+@Data
+@NoArgsConstructor
 public class ClienteDTO {
 
     private long id;
     private String nomeEmpresa;
-    private LogradouroDTO logradouro;
+    private LogradouroDTO logradouro = new LogradouroDTO();
 
     public ClienteDTO(Cliente cliente) {
         converte(cliente);
-    }
-
-    public long getId() {
-        return id;
-    }
-
-    public void setId(long id) {
-        this.id = id;
-    }
-
-    public String getNomeEmpresa() {
-        return nomeEmpresa;
-    }
-
-    public void setNomeEmpresa(String nomeEmpresa) {
-        this.nomeEmpresa = nomeEmpresa;
-    }
-
-    public LogradouroDTO getLogradouro() {
-        return logradouro;
-    }
-
-    public void setLogradouro(LogradouroDTO logradouro) {
-        this.logradouro = logradouro;
     }
 
     private ClienteDTO converte(Cliente cliente) {
@@ -50,4 +31,27 @@ public class ClienteDTO {
         return this;
 
     }
+
+    public Cliente paraCliente() {
+        Cliente cliente = new Cliente();
+        cliente.setId(this.id);
+        cliente.setNomeEmpresa(this.nomeEmpresa);
+        Logradouro logradouro = new Logradouro();
+        logradouro.setCep(this.getLogradouro().getCep());
+        logradouro.setCidade(this.getLogradouro().getCidade());
+        logradouro.setEndereco(this.getLogradouro().getEndereco());
+        logradouro.setNumero(this.getLogradouro().getNumero());
+        logradouro.setEstado(this.getLogradouro().getEstado());
+        logradouro.setId(this.getLogradouro().getId());
+        cliente.setLogradouro(logradouro);
+        //TODO vai ser implementado quando tiver contato
+        /*      List<Contato> contatos = this.getContato()
+                .stream()
+                .map(ContatoDB::paraContato)
+                .collect(Collectors.toList());
+                cliente.setContato(contatos)*/
+
+        return cliente;
+    }
+
 }

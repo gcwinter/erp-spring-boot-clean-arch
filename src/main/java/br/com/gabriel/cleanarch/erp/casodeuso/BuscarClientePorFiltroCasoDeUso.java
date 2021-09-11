@@ -1,6 +1,6 @@
 package br.com.gabriel.cleanarch.erp.casodeuso;
 
-import br.com.gabriel.cleanarch.erp.casodeuso.recurso.Cliente;
+import br.com.gabriel.cleanarch.erp.casodeuso.dominio.Cliente;
 
 public interface BuscarClientePorFiltroCasoDeUso {
 

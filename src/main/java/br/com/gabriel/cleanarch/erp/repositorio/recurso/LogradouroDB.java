@@ -1,5 +1,8 @@
 package br.com.gabriel.cleanarch.erp.repositorio.recurso;
 
+import lombok.AllArgsConstructor;
+import lombok.NoArgsConstructor;
+
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;

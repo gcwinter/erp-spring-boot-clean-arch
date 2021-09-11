@@ -1,70 +1,50 @@
 package br.com.gabriel.cleanarch.erp.controller;
 
+import br.com.gabriel.cleanarch.erp.casodeuso.AtualizarClienteCasoDeUso;
+import br.com.gabriel.cleanarch.erp.casodeuso.BuscarClientePorFiltroCasoDeUso;
+import br.com.gabriel.cleanarch.erp.casodeuso.CadastrarClienteCasoDeUso;
+import br.com.gabriel.cleanarch.erp.casodeuso.ExcluirClienteCasoDeUso;
+import br.com.gabriel.cleanarch.erp.casodeuso.dominio.Cliente;
 import br.com.gabriel.cleanarch.erp.controller.recuso.ClienteDTO;
-import br.com.gabriel.cleanarch.erp.controller.recuso.RequisicaoNovoContatoDTO;
-import br.com.gabriel.cleanarch.erp.controller.recuso.RequisiçaoNovoclienteDTO;
-import br.com.gabriel.cleanarch.erp.casodeuso.CadastrarNovoClienteCasoDeUso;
-import br.com.gabriel.cleanarch.erp.casodeuso.CadastrarNovoContatoCasoDeUso;
-import br.com.gabriel.cleanarch.erp.casodeuso.NovoClienteCasoDeUso;
-import br.com.gabriel.cleanarch.erp.casodeuso.PaginaNovoContatoCasoDeUso;
-import br.com.gabriel.cleanarch.erp.casodeuso.recurso.Cliente;
-import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.ResponseBody;
+import lombok.AllArgsConstructor;
+import org.springframework.web.bind.annotation.*;
 
-@Controller
+@RestController
+@AllArgsConstructor
+@RequestMapping("/api/v1/clientes")
 public class ClienteController {
 
-    private final CadastrarNovoClienteCasoDeUso cadastrarNovoClienteCasoDeUso;
-    private final NovoClienteCasoDeUso novoClienteCasoDeUso;
-    private final CadastrarNovoContatoCasoDeUso cadastrarNovoContatoCasoDeUso;
-    private final PaginaNovoContatoCasoDeUso paginaNovoContatoCasoDeUso;
+    private final CadastrarClienteCasoDeUso cadastrarClienteCasoDeUso;
+    private final AtualizarClienteCasoDeUso atualizarClienteCasoDeUso;
+    private final BuscarClientePorFiltroCasoDeUso buscarClientePorFiltroCasoDeUso;
+    private final ExcluirClienteCasoDeUso excluirClienteCasoDeUso;
 
-
-    public ClienteController(CadastrarNovoClienteCasoDeUso cadastrarNovoClienteCasoDeUso,
-                             NovoClienteCasoDeUso novoClienteCasoDeUso,
-                             CadastrarNovoContatoCasoDeUso cadastrarNovoContatoCasoDeUso,
-                             PaginaNovoContatoCasoDeUso paginaNovoContatoCasoDeUso) {
-        this.cadastrarNovoClienteCasoDeUso = cadastrarNovoClienteCasoDeUso;
-        this.novoClienteCasoDeUso = novoClienteCasoDeUso;
-        this.cadastrarNovoContatoCasoDeUso = cadastrarNovoContatoCasoDeUso;
-        this.paginaNovoContatoCasoDeUso = paginaNovoContatoCasoDeUso;
+    @PostMapping
+    public ClienteDTO cadastrarCliente(@RequestBody ClienteDTO clienteDTO) {
+        final Cliente execute = cadastrarClienteCasoDeUso.execute(clienteDTO.paraCliente());
+        return new ClienteDTO(execute);
     }
 
-    @GetMapping("/novoCliente")
-    public String novoCliente() {
-        novoClienteCasoDeUso.execute(null);
-        return "novoCliente";
+    @PutMapping("/{id}")
+    public ClienteDTO atualizarCliente(@PathVariable long id, @RequestBody ClienteDTO clienteDTO) {
+        if (clienteDTO.getId() != id) {
+            throw new RuntimeException("ID do corpo diferente da URI");
+        }
+        final Cliente execute = atualizarClienteCasoDeUso.execute(clienteDTO.paraCliente());
+        return new ClienteDTO(execute);
     }
 
-    @PostMapping("/novoCliente")
-    public String cadastrarNovoCliente(RequisiçaoNovoclienteDTO requisicaoDto) {
-
-        cadastrarNovoClienteCasoDeUso.execute(requisicaoDto.criaCliente());
-        return "novoCliente";
+    @GetMapping
+    public ClienteDTO buscarCliente(ClienteDTO clienteDTO) {
+        final Cliente execute = buscarClientePorFiltroCasoDeUso.execute(clienteDTO.paraCliente());
+        return new ClienteDTO(execute);
     }
 
-    @ResponseBody
-    @PostMapping("/clientes")
-    public ClienteDTO cadastrarNovoClienteRest(@RequestBody RequisiçaoNovoclienteDTO requisicaoDto) {
-
-        Cliente cliente = cadastrarNovoClienteCasoDeUso.execute(requisicaoDto.criaCliente());
-        return new ClienteDTO(cliente);
+    @DeleteMapping("/{id}")
+    public void excluirCliente(@PathVariable long id) {
+        ClienteDTO clienteDTO = new ClienteDTO();
+        clienteDTO.setId(id);
+        excluirClienteCasoDeUso.execute(clienteDTO.paraCliente());
     }
-
-    @PostMapping("/novoContato")
-    public String cadastrarNovoContato(RequisicaoNovoContatoDTO requisicaoDTO) {
-        cadastrarNovoContatoCasoDeUso.execute(null);
-        return "novoContato";
-    }
-
-    @GetMapping("/novoContato")
-    public String paginaNovoContato() {
-        paginaNovoContatoCasoDeUso.execute(null);
-        return "novoContato";
-    }
-
 
 }
