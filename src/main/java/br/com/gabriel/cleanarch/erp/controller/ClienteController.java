@@ -21,8 +21,8 @@ public class ClienteController {
 
     @PostMapping
     public ClienteDTO cadastrarCliente(@RequestBody ClienteDTO clienteDTO) {
-        final Cliente execute = cadastrarClienteCasoDeUso.execute(clienteDTO.paraCliente());
-        return new ClienteDTO(execute);
+        final Cliente cliente = cadastrarClienteCasoDeUso.execute(clienteDTO.paraCliente());
+        return new ClienteDTO(cliente);
     }
 
     @PutMapping("/{id}")

@@ -4,5 +4,5 @@ import br.com.gabriel.cleanarch.erp.casodeuso.dominio.Contato;
 
 public interface CadastrarContatoCasoDeUso {
 
-    Contato execute(Contato contato);
+    Contato execute(Long id,Contato contato);
 }

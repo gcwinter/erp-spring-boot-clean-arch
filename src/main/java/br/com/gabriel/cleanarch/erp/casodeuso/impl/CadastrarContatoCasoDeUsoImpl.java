@@ -10,10 +10,10 @@ import org.springframework.stereotype.Service;
 @AllArgsConstructor
 public class CadastrarContatoCasoDeUsoImpl implements CadastrarContatoCasoDeUso {
 
-    private ContatoRepositoryPortao contatoRepositoryPortao;
+    private final ContatoRepositoryPortao contatoRepositoryPortao;
 
     @Override
-    public Contato execute(Contato contato) {
-        return contatoRepositoryPortao.save(contato);
+    public Contato execute(Long id, Contato contato) {
+        return contatoRepositoryPortao.save(id,contato);
     }
 }

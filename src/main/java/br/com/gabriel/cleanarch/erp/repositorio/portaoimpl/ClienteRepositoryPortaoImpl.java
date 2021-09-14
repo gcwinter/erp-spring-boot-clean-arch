@@ -11,7 +11,7 @@ import static java.util.Objects.isNull;
 
 @Component
 @AllArgsConstructor
-public class ClienteDBPortaoImpl implements ClienteRepositoryPortao {
+public class ClienteRepositoryPortaoImpl implements ClienteRepositoryPortao {
 
     private final ClienteRepository clienteRepository;
 

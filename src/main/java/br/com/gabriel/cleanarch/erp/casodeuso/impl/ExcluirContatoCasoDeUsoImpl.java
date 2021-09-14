@@ -13,7 +13,7 @@ public class ExcluirContatoCasoDeUsoImpl implements ExcluirContatoCasoDeUso {
     private final ContatoRepositoryPortao contatoRepositoryPortao;
 
     @Override
-    public Contato execute(Contato contato) {
-        return contatoRepositoryPortao.excluir(contato);
+    public Contato execute(Long id, Contato contato) {
+        return contatoRepositoryPortao.excluir(id,contato);
     }
 }

@@ -70,4 +70,8 @@ public class ClienteDB {
         return cliente;
     }
 
+    public void adicionaContato(ContatoDB contatoDB){
+         contato.add(contatoDB);
+    }
+
 }
